@@ -83,11 +83,7 @@ const AllNotesPage = ({ jsonData }) => {
           </Grid>
         </Container>
         <Modal isOpen={isOpenDialogue} onClose={() => setIsOpenDialogue(false)}>
-          <AlertDialogE
-            noteInfo={noteInfo}
-            setIsOpen={setIsOpenDialogue}
-            setNotes={setNotes}
-          />
+          <AlertDialogE noteInfo={noteInfo} setIsOpen={setIsOpenDialogue} />
         </Modal>
         <Modal isOpen={isOpenForm} onClose={() => setIsOpenFomr(false)}>
           <ModalOverlay />
@@ -120,7 +116,5 @@ export async function getServerSideProps() {
     console.error(error)
   }
 }
-
-export const revalidate = 60
 
 export default AllNotesPage

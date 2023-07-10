@@ -10,13 +10,12 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 
-const AlertDialogE = ({ noteInfo, setIsOpen, setNotes }) => {
+const AlertDialogE = ({ noteInfo, setIsOpen }) => {
   const router = useRouter()
   const onDelete = async () => {
     try {
       const noteId = noteInfo.id
       const response = await fetch(`/api/notes/${noteId}`, { method: 'DELETE' })
-      const notes = await fetch('/api/notes')
       router.refresh()
     } catch (error) {
       console.log(error)

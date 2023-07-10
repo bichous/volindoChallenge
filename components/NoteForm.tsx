@@ -8,7 +8,7 @@ import {
   Button,
   Switch
 } from '@chakra-ui/react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 import { NoteCardProps } from './NoteCard'
 
