@@ -39,7 +39,7 @@ const AllNotesPage = ({ jsonData }) => {
           // bgGradient='linear(to-t, orange.300, gray.500)'
         >
           <Center className='jejeje' maxW={'6xl'} display={'grid'}>
-            <Button>Añadir nota +</Button>
+            <Button>Add Note +</Button>
             <Text fontSize='6xl'>Notes</Text>
             <ColorModeSwitcher />
           </Center>
