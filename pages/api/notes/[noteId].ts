@@ -15,7 +15,7 @@ export default async function handler(
   res: NextApiResponse<Data | ErrorResponse>
 ) {
   const { query, method, body } = req
-  const { noteId } = query
+  const { noteId, title } = query
   const parsedId = parseInt(noteId as string)
 
   switch (method) {
@@ -43,7 +43,7 @@ export default async function handler(
       //Crear la nota junto con la relacion del usuario que la creo
       const { noteId } = query
       const { title, description } = body
-      if (!noteId) {
+      if (noteId === 'undefined') {
         try {
           const createdNote = await db.note.create({
             data: {
@@ -51,6 +51,7 @@ export default async function handler(
               description
             }
           })
+          res.redirect('/notes')
         } catch (error) {
           console.error(error)
           res.status(500).json({ error: 'Ocurrió un error al crear la nota.' })
@@ -75,12 +76,19 @@ export default async function handler(
         }
       }
       break
-    case 'PUT':
-      console.log('en el put')
-      //Modificar la nota en base a su id
-      break
     case 'DELETE':
       //Eliminar la nota en base a si id
+      console.log('aqui ta tu servicio mamon', parsedId)
+      try {
+        const deleteNote = await db.note.delete({
+          where: {
+            id: parsedId
+          }
+        })
+      } catch (error) {
+        console.error(error)
+        res.status(500).json({ error: 'Ocurrió un error al borrar la nota.' })
+      }
       break
 
     default:

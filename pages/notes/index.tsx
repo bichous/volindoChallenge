@@ -7,22 +7,37 @@ import {
   Container,
   Text,
   Modal,
-  Button
+  Button,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay
 } from '@chakra-ui/react'
 import Head from 'next/head'
 import NoteCard from '../../components/NoteCard'
 import AlertDialogE from '../../components/AlertDialoge'
 import { NoteCardProps } from '../../components/NoteCard'
 import { ColorModeSwitcher } from '../../components/ColorModeSwtcher'
+import NoteForm from '../../components/NoteForm'
 
 const AllNotesPage = ({ jsonData }) => {
   const [message, setMessage] = useState('')
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpenDialogue, setIsOpenDialogue] = useState(false)
+  const [isOpenForm, setIsOpenFomr] = useState(false)
+  const [noteInfo, setNoteInfo] = useState(null)
 
-  const notes = jsonData.data
+  const [notes, setNotes] = useState(jsonData.data)
 
-  const handleModal = (item: NoteCardProps): void => {
-    setIsOpen(true)
+  const handleModalDialogue = (note): void => {
+    console.log('viendo si llega el note', note)
+    setIsOpenDialogue(true)
+    setNoteInfo(note)
+  }
+
+  const handleModalForm = (): void => {
+    setIsOpenFomr(true)
   }
 
   return (
@@ -39,7 +54,7 @@ const AllNotesPage = ({ jsonData }) => {
           // bgGradient='linear(to-t, orange.300, gray.500)'
         >
           <Center className='jejeje' maxW={'6xl'} display={'grid'}>
-            <Button>Add Note +</Button>
+            <Button onClick={handleModalForm}>Add Note +</Button>
             <Text fontSize='6xl'>Notes</Text>
             <ColorModeSwitcher />
           </Center>
@@ -63,14 +78,28 @@ const AllNotesPage = ({ jsonData }) => {
                   id={note.id}
                   title={note.title}
                   description={note.description}
-                  onClickDelete={() => handleModal(note)}
+                  onClickDelete={() => handleModalDialogue(note)}
                 />
               </GridItem>
             ))}
           </Grid>
         </Container>
-        <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
-          <AlertDialogE />
+        <Modal isOpen={isOpenDialogue} onClose={() => setIsOpenDialogue(false)}>
+          <AlertDialogE
+            noteInfo={noteInfo}
+            setIsOpen={setIsOpenDialogue}
+            setNotes={setNotes}
+          />
+        </Modal>
+        <Modal isOpen={isOpenForm} onClose={() => setIsOpenFomr(false)}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Add one Note</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <NoteForm />
+            </ModalBody>
+          </ModalContent>
         </Modal>
       </main>
     </>

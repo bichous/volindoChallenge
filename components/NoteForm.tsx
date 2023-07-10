@@ -20,11 +20,20 @@ interface formProps {
 const NoteForm = ({ id, title, description }: NoteCardProps) => {
   const [formState, setFormState] = useState<formProps>({})
   const [edit, setEdit] = useState(id ? false : true)
+  const [isloading, setIsLoding] = useState(false)
 
   const toggle = (isEdit: boolean) => setEdit(!isEdit)
 
+  const handleLogin = () => {
+    setIsLoding(!isloading)
+  }
+
   return (
-    <form action={edit ? `/api/notes/${id}` : `/api/notes`} method='POST'>
+    <form
+      action={edit ? `/api/notes/${id}` : `/api/notes`}
+      method='POST'
+      onSubmit={handleLogin}
+    >
       <FormControl gap={'200px'}>
         <FormLabel htmlFor='isChecked' hidden={!id ? true : false}>
           Editar:
@@ -50,7 +59,9 @@ const NoteForm = ({ id, title, description }: NoteCardProps) => {
         ></Textarea>
         <FormHelperText>We'll never share your email.</FormHelperText>
       </FormControl>
-      <Button type='submit'>Enviar</Button>
+      <Button type='submit' isLoading={isloading}>
+        Enviar
+      </Button>
     </form>
   )
 }
