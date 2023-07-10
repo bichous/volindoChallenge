@@ -36,6 +36,7 @@ datasource db {
 This will create an SQLite database named dev.db in the project's root folder.
 
 ### Database Migrations
+
 Run the following command to apply database migrations:
 
 ```bash
@@ -44,6 +45,15 @@ npx prisma migrate dev --name init
 
 This will create the necessary tables and initial structure in the SQLite database.
 
+### Database Injection
+
+In your terminal go to the prisma folder anr run the following command:
+
+```bash
+node seedNotes.js
+```
+
+This will create some notes to consume from de SQLite database.
 ### Running the Project
 
 Once you have completed all the previous steps, run the following command to start the development server:
