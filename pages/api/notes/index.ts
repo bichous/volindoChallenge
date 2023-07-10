@@ -15,10 +15,6 @@ export default async function getNotes(
   req: NextApiRequest,
   res: NextApiResponse<Data | ErrorResponse>
 ) {
-  const { query } = req
-
-  const data = await req.body
-
   if (req.method === 'GET') {
     try {
       const data = await db.note.findMany({

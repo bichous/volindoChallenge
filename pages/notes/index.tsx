@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { getAllNotes } from '../../dummyData'
+
 import {
   Grid,
   GridItem,
@@ -11,7 +11,6 @@ import {
   ModalBody,
   ModalCloseButton,
   ModalContent,
-  ModalFooter,
   ModalHeader,
   ModalOverlay
 } from '@chakra-ui/react'
@@ -31,7 +30,6 @@ const AllNotesPage = ({ jsonData }) => {
   const [notes, setNotes] = useState(jsonData.data)
 
   const handleModalDialogue = (note): void => {
-    console.log('viendo si llega el note', note)
     setIsOpenDialogue(true)
     setNoteInfo(note)
   }
@@ -122,5 +120,7 @@ export async function getServerSideProps() {
     console.error(error)
   }
 }
+
+export const revalidate = 60
 
 export default AllNotesPage

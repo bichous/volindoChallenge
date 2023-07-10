@@ -1,7 +1,6 @@
 import * as React from 'react'
 import {
   Button,
-  Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
@@ -9,17 +8,16 @@ import {
   ModalHeader,
   ModalOverlay
 } from '@chakra-ui/react'
+import { useRouter } from 'next/navigation'
 
 const AlertDialogE = ({ noteInfo, setIsOpen, setNotes }) => {
-  console.log('me voy avolver chango', noteInfo)
-
+  const router = useRouter()
   const onDelete = async () => {
     try {
       const noteId = noteInfo.id
       const response = await fetch(`/api/notes/${noteId}`, { method: 'DELETE' })
-      //const response = await fetch(`/api/notes/${noteId}?noteId=${noteId}`, { method: 'DELETE' })
       const notes = await fetch('/api/notes')
-      console.log('el notitas', notes)
+      router.refresh()
     } catch (error) {
       console.log(error)
     } finally {

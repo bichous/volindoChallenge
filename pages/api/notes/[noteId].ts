@@ -15,7 +15,7 @@ export default async function handler(
   res: NextApiResponse<Data | ErrorResponse>
 ) {
   const { query, method, body } = req
-  const { noteId, title } = query
+  const { noteId } = query
   const parsedId = parseInt(noteId as string)
 
   switch (method) {
@@ -78,13 +78,13 @@ export default async function handler(
       break
     case 'DELETE':
       //Eliminar la nota en base a si id
-      console.log('aqui ta tu servicio mamon', parsedId)
       try {
         const deleteNote = await db.note.delete({
           where: {
             id: parsedId
           }
         })
+        res.redirect('/notes')
       } catch (error) {
         console.error(error)
         res.status(500).json({ error: 'Ocurrió un error al borrar la nota.' })
@@ -94,6 +94,4 @@ export default async function handler(
     default:
       break
   }
-  // res.status(200).json({ name: 'John Doe' })
-  // res.redirect('/notes')
 }
